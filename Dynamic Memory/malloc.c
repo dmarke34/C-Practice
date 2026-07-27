@@ -29,7 +29,30 @@ int main()
         j++;
     }
 
-    free(arr);
+    int *newArr = realloc(arr, (n + 5) * sizeof(int));
+
+    if (newArr == NULL)
+    {
+        free(arr); // realloc failed, arr is still valid — clean it up
+        return 0;
+    }
+
+    int x = n;
+    while (x < n + 5)
+    {
+        scanf("%d", (newArr + x));
+        x++;
+    }
+
+    printf("Array: ");
+    int y = 0;
+    while (y < n + 5)
+    {
+        printf("%d, ", *(newArr + y));
+        y++;
+    }
+
+    free(newArr);
 
     return 0;
 }
