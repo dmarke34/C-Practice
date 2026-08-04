@@ -14,23 +14,14 @@ void delay(volatile uint32_t count)
 
 int main(void)
 {
-    uint32_t leds[3] = {0, 7, 14};
-
     RCC_AHB1ENR |= (1 << 1);
 
-    for (uint32_t i = 0; i < 3; i++)
-    {
-        GPIOB_MODER &= ~(0x3UL << (leds[i] * 2));
-        GPIOB_MODER |=  (0x1UL << (leds[i] * 2));
-    }
+    GPIOB_MODER &= ~(0x3UL << 0);
+    GPIOB_MODER |=  (0x1UL << 0);
 
     for (;;)
     {
-        for (uint32_t i = 0; i < 3; i++)
-        {
-            GPIOB_ODR &= ~((1UL << 0) | (1UL << 7) | (1UL << 14));
-            GPIOB_ODR |= (1UL << leds[i]);
-            delay(2000000);
-        }
+        GPIOB_ODR ^= (1UL << 0);
+        delay(1000000);
     }
 }
